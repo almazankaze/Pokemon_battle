@@ -1,0 +1,298 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  font-size: 15px;
+  font-family: "Press Start 2P", cursive;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  border: 0;
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.625rem;
+  color: black;
+}
+
+button:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+h2 {
+  font-size: 1rem;
+}
+
+.myCanvas {
+}
+
+.container {
+  display: inline-block;
+  position: relative;
+}
+
+.transition-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: black;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.pokeSelect {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  z-index: 10;
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.selectContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  margin: 0.75rem 0;
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+.selectContainer h2 {
+  font-size: 0.75rem;
+}
+
+.backBtn {
+  margin-top: 0.5rem;
+}
+
+#userInterface {
+  display: none;
+}
+
+.poke-info {
+  background-color: #fff;
+  width: 200px;
+  position: absolute;
+  padding: 0.75rem;
+  border-bottom: 2px solid black;
+}
+
+.border-left {
+  border-left: 4px solid black;
+  line-height: 10px;
+}
+
+.border-right {
+  border-right: 4px solid black;
+  line-height: 10px;
+}
+
+.enemy-info {
+  top: 25px;
+  left: 25px;
+}
+
+.player-info {
+  top: 200px;
+  right: 25px;
+}
+
+.poke-name {
+  font-size: 1rem;
+}
+
+.playerHpNumber {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  margin-left: 1.5rem;
+}
+
+.status-container {
+  margin: 0.5rem 1rem;
+}
+
+.health-container {
+  position: relative;
+}
+
+.health-bar {
+  height: 5px;
+  background-color: green;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.health-bg {
+  height: 5px;
+  margin-top: 0.5rem;
+  background-color: #ccc;
+}
+
+.menu-container {
+  background-color: #fff;
+  position: absolute;
+  height: 130px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 10px;
+  border: 2px solid black;
+  margin: 0.25rem;
+  display: flex;
+}
+
+.dialogue-box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  border-radius: 10px;
+  border: 4px solid black;
+  margin: 0.25rem;
+  padding: 1rem;
+  display: none;
+  cursor: pointer;
+  line-height: 2.5;
+}
+
+.menu-box1 {
+  width: 45%;
+  border-radius: 10px 0 0 10px;
+  border-top: 4px solid black;
+  border-left: 4px solid black;
+  border-bottom: 4px solid black;
+  margin: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  padding: 1rem;
+}
+
+.menu-box2 {
+  width: 55%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-radius: 10px;
+  border: 4px solid black;
+  margin: 0.25rem;
+}
+
+#attackType {
+  display: none;
+}
+
+#attacksBox {
+  display: none;
+}
+
+.loading * {
+  /* disable all mouse events on subElements */
+  pointer-events: none;
+}
+
+@media screen and (max-width: 500px) {
+  body {
+    align-items: flex-start;
+    margin-top: 2rem;
+  }
+
+  button {
+    font-size: 0.4rem;
+  }
+
+  h2 {
+    font-size: 0.625rem;
+  }
+
+  .selectContainer {
+    justify-content: space-between;
+    font-size: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .selectContainer h2 {
+    font-size: 0.5rem;
+  }
+
+  .backBtn {
+    font-size: 0.625rem;
+    margin-top: 0.5rem;
+  }
+
+  .poke-info {
+    background-color: #fff;
+    width: 120px;
+    position: absolute;
+    padding: 0.5rem;
+    border-bottom: 2px solid black;
+  }
+
+  .enemy-info {
+    top: 15px;
+    left: 15px;
+  }
+
+  .player-info {
+    top: 125px;
+    right: 15px;
+  }
+
+  .poke-name {
+    font-size: 0.625rem;
+  }
+
+  .status-container {
+    font-size: 0.625rem;
+    font-weight: bold;
+  }
+
+  .playerHpNumber {
+    font-size: 0.5rem;
+    margin-top: 0.25rem;
+    margin-left: 0.5rem;
+  }
+
+  .dialogue-box {
+    font-size: 0.625rem;
+    line-height: 2;
+    padding: 0.5rem;
+    border: 3px solid black;
+  }
+
+  .menu-container {
+    height: 80px;
+    margin: 0.125rem;
+  }
+
+  .menu-box1 {
+    font-size: 0.5rem;
+    padding: 0.75rem;
+    border-top: 3px solid black;
+    border-left: 3px solid black;
+    border-bottom: 3px solid black;
+  }
+
+  .menu-box2 {
+    border: 3px solid black;
+  }
+}
