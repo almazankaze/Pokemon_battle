@@ -101,7 +101,12 @@ export function initBattle() {
 function addEventsToAttacks() {
   document.querySelectorAll(".attack").forEach((b) => {
     b.addEventListener("click", (e) => {
+      let speedWinner;
       const selectedAttack = attacks[e.currentTarget.id];
+
+      // random attack
+      let enemyAttack = 0;
+      const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
 
       takeTurn(
         playerTeam[currentPlayer],
@@ -111,6 +116,16 @@ function addEventsToAttacks() {
         queue,
         battleAnimationId
       );
+
+      queue.push(() => {
+        takeTurn(
+          enemyTeam[currentEnemy],
+          randomAttack,
+          playerTeam[currentPlayer],
+          renderedSprites,
+          queue
+        );
+      });
 
       if (playerTeam[currentPlayer].getMovePP(selectedAttack) <= 0) {
         b.disabled = true;

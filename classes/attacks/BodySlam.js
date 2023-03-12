@@ -1,3 +1,4 @@
+import { bodySlam } from "../../data/audio.js";
 import Attack from "./Attack.js";
 
 export default class BodySlam extends Attack {
@@ -44,7 +45,7 @@ export default class BodySlam extends Attack {
     let movementDistance = -20;
     if (recipient.isEnemy) movementDistance = 20;
 
-    // audio.bodySlam.play();
+    bodySlam.play();
 
     tl.to(attackerPos, {
       x: attackerPos.x - movementDistance,

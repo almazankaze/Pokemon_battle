@@ -1,3 +1,5 @@
+import { hit } from "../../data/audio.js";
+
 export default class Attack {
   constructor({
     name,
@@ -80,7 +82,7 @@ export default class Attack {
 
   // animation for when pokemon gets hit
   hitEffect(recipient) {
-    // audio.normalHit.play();
+    hit.play();
 
     gsap.to(recipient.position, {
       x: recipient.position.x + 10,
@@ -99,7 +101,7 @@ export default class Attack {
 
   // hit pokemon and reduce health bar
   hitAndDamage(recipient, damage) {
-    audio.normalHit.play();
+    hit.play();
 
     gsap.to(recipient.position, {
       x: recipient.position.x + 10,
@@ -117,5 +119,25 @@ export default class Attack {
         recipient.reduceHealth(damage);
       },
     });
+  }
+
+  shakeContainer(element) {
+    TweenMax.fromTo(
+      element,
+      0.15,
+      { x: -20 },
+      {
+        x: 20,
+        repeat: 5,
+        yoyo: true,
+        ease: Sine.easeInOut,
+        onComplete: () => {
+          TweenMax.to(element, 1.5, {
+            x: 0,
+            ease: Elastic.easeOut,
+          });
+        },
+      }
+    );
   }
 }

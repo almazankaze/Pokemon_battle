@@ -1,3 +1,4 @@
+import { pokemonCry } from "../../data/audio.js";
 import Sprite from "../Sprite.js";
 
 export default class Pokemon extends Sprite {
@@ -38,10 +39,57 @@ export default class Pokemon extends Sprite {
     this.gotCrit = false;
     this.stages = [0, 0, 0, 0, 0];
     this.sleepCounter = 0;
+
+    if (this.isEnemy) {
+      this.frames = { ...this.frames, max: 5, hold: 10 };
+    }
   }
 
   randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  recoverHealth(healthAmount) {
+    let healthBar = "#playerHealthBar";
+    if (this.isEnemy) healthBar = "#enemyHealthBar";
+
+    let newHealth = this.health + healthAmount;
+
+    if (newHealth >= this.stats[0]) newHealth = this.stats[0];
+
+    let Cont = { val: this.health },
+      newVal = newHealth;
+
+    this.health += healthAmount;
+
+    if (this.health >= this.stats[0]) this.health = this.stats[0];
+
+    let healthBarWidth = Math.floor((this.health / this.stats[0]) * 100);
+
+    if (!this.isEnemy) {
+      TweenLite.to(Cont, 3, {
+        val: newVal,
+        roundProps: "val",
+        onUpdate: () => {
+          document.getElementById("playerHpNumber").innerHTML =
+            Cont.val + " / " + this.stats[0];
+        },
+        onComplete: () => {
+          document.querySelector("#menu").classList.remove("loading");
+        },
+      });
+    }
+
+    gsap.to(healthBar, {
+      width: healthBarWidth + "%",
+      duration: 2,
+
+      // after health recovers
+      onComplete: () => {
+        if (this.isEnemy)
+          document.querySelector("#menu").classList.remove("loading");
+      },
+    });
   }
 
   reduceHealth(healthAmount) {
@@ -89,6 +137,31 @@ export default class Pokemon extends Sprite {
     });
   }
 
+  // can pokemon attack
+  canAttack(status) {
+    let c = this.randomIntFromInterval(1, 100);
+
+    switch (status) {
+      case "paralyzed":
+        return c <= 75 ? true : false;
+      case "sleeping":
+        if (this.sleepCounter >= 1) {
+          this.sleepCounter -= 1;
+          return false;
+        } else {
+          this.status = "healthy";
+          return true;
+        }
+      case "frozen":
+        if (c <= 20) {
+          this.status = "healthy";
+          return true;
+        } else return false;
+      default:
+        return true;
+    }
+  }
+
   getMultiplier(stage) {
     switch (stage) {
       case 0:
@@ -118,5 +191,42 @@ export default class Pokemon extends Sprite {
       case -6:
         return 0.25;
     }
+  }
+
+  getSpeed() {
+    let speed = this.stats[4];
+
+    if (this.status === "paralyzed") speed = Math.ceil(speed / 2);
+
+    speed = Math.ceil(speed * this.getMultiplier(this.stages[4]));
+
+    return speed;
+  }
+
+  animateEntrance() {
+    this.animate = true;
+    pokemonCry[this.name].play();
+
+    const t = gsap.timeline();
+
+    t.to(this.frontSprite, {
+      duration: 0.4,
+      repeat: 1,
+
+      onComplete: () => {
+        this.animate = false;
+      },
+    });
+  }
+
+  faint() {
+    pokemonCry[this.name].play();
+    document.querySelector("#dialogueBox").innerHTML = this.name + " fainted!";
+    gsap.to(this.position, {
+      y: this.position.y + 20,
+    });
+    gsap.to(this, {
+      opacity: 0,
+    });
   }
 }

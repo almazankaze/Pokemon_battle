@@ -1,3 +1,4 @@
+import { battle } from "./data/audio.js";
 import Messages from "./classes/Messages.js";
 
 const messages = new Messages();
@@ -36,4 +37,20 @@ export function takeTurn(attacker, move, recipient, renderedSprites, queue) {
       recipient.gotCrit = false;
     }
   }
+}
+
+export function faintPokemon(pokemon, queue, battleAnimationId) {
+  pokemon.faint();
+}
+
+// end the battle
+export function finishBattle(battleAnimationId) {
+  gsap.to("#transitionBg", {
+    opacity: 1,
+    onComplete: () => {
+      cancelAnimationFrame(battleAnimationId);
+      document.querySelector("#userInterface").style.display = "none";
+      battle.stop();
+    },
+  });
 }

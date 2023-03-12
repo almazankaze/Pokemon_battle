@@ -1,5 +1,5 @@
 import Pokemon from "./Pokemon.js";
-import { blastoiseCry } from "../../data/audio.js";
+import BodySlam from "../attacks/BodySlam.js";
 
 export default class Blastoise extends Pokemon {
   constructor({
@@ -36,8 +36,43 @@ export default class Blastoise extends Pokemon {
       size,
     });
 
-    if (this.isEnemy) {
-      this.frames = { ...this.frames, max: 5, hold: 10 };
+    this.attacks = attacks;
+    this.moves = {};
+    this.moves["BODY SLAM"] = new BodySlam(attacks[0]);
+  }
+
+  getMovePP(attack) {
+    return this.moves[attack.name].pp;
+  }
+
+  attack({ attack, recipient, renderedSprites }) {
+    // display dialogueBox
+    let a = recipient.isEnemy ? "" : "Enemy";
+    document.querySelector("#dialogueBox").style.display = "block";
+    document.querySelector("#dialogueBox").innerHTML =
+      a + " " + this.name + " used " + attack.name + "!";
+
+    document.querySelector("#menu").classList.add("loading");
+
+    let rotation = 1;
+    if (this.isEnemy) rotation = -2.2;
+
+    let mult;
+
+    switch (attack.name) {
+      case "BODY SLAM":
+        mult = this.getMultiplier(this.stages[1]);
+        this.didHit = this.moves["BODY SLAM"].useMove(
+          this.position,
+          this.stats[1],
+          mult,
+          recipient
+        );
+        break;
+    }
+
+    if (this.didHit !== 1) {
+      document.querySelector("#menu").classList.remove("loading");
     }
   }
 
@@ -56,19 +91,13 @@ export default class Blastoise extends Pokemon {
     }
   }
 
-  animateEntrance() {
-    this.animate = true;
-    blastoiseCry.play();
+  chooseMove() {
+    let dangerHealth = Math.floor(this.stats[0] * 0.25);
 
-    const t = gsap.timeline();
+    if (this.health <= dangerHealth) {
+      return 3;
+    }
 
-    t.to(this.frontSprite, {
-      duration: 0.4,
-      repeat: 1,
-
-      onComplete: () => {
-        this.animate = false;
-      },
-    });
+    return Math.floor(Math.random() * 3);
   }
 }

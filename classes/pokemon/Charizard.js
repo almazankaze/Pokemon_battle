@@ -7,16 +7,16 @@ export default class Charizard extends Pokemon {
     health,
     attacks,
     types,
-    status = "healthy",
+    status,
     stats,
-    isEnemy = false,
+    isEnemy,
     position,
     frontSprite,
     backSprite,
-    frames = { max: 1, hold: 10 },
+    frames,
     sprites,
-    animate = false,
-    rotation = 0,
+    animate,
+    rotation,
     size,
   }) {
     super({
@@ -73,6 +73,28 @@ export default class Charizard extends Pokemon {
 
     if (this.didHit !== 1) {
       document.querySelector("#menu").classList.remove("loading");
+    }
+  }
+
+  getWeakness(attackType) {
+    switch (attackType) {
+      case "Rock":
+        return 4;
+      case "Water":
+      case "Electric":
+        return 2;
+      case "Ground":
+        return 0;
+      case "Bug":
+      case "Grass":
+        return 0.25;
+      case "Fighting":
+      case "Steel":
+      case "Fire":
+      case "Fairy":
+        return 0.5;
+      default:
+        return 1;
     }
   }
 }
