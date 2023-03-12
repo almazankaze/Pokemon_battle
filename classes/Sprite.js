@@ -46,7 +46,7 @@ export default class Sprite {
       this.image,
       this.frames.val * this.width,
       0,
-      this.image.width / this.frames.max,
+      this.image.width / this.frames.max - 1,
       this.image.height,
       this.position.x,
       this.position.y,
