@@ -1,5 +1,6 @@
 import Pokemon from "./Pokemon.js";
 import BodySlam from "../attacks/BodySlam.js";
+import Earthquake from "../attacks/Earthquake.js";
 
 export default class Charizard extends Pokemon {
   constructor({
@@ -39,6 +40,7 @@ export default class Charizard extends Pokemon {
     this.attacks = attacks;
     this.moves = {};
     this.moves["BODY SLAM"] = new BodySlam(attacks[0]);
+    this.moves["EARTHQUAKE"] = new Earthquake(attacks[2]);
   }
 
   getMovePP(attack) {
@@ -63,6 +65,15 @@ export default class Charizard extends Pokemon {
       case "BODY SLAM":
         mult = this.getMultiplier(this.stages[1]);
         this.didHit = this.moves["BODY SLAM"].useMove(
+          this.position,
+          this.stats[1],
+          mult,
+          recipient
+        );
+        break;
+      case "EARTHQUAKE":
+        mult = this.getMultiplier(this.stages[1]);
+        this.didHit = this.moves["EARTHQUAKE"].useMove(
           this.position,
           this.stats[1],
           mult,

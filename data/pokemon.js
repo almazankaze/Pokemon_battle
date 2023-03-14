@@ -41,7 +41,7 @@ export const pokemon = {
     },
     types: [Types.WATER],
     attacks: [
-      attacks.BODYSLAM,
+      attacks.EARTHQUAKE,
       attacks.HYDROPUMP,
       attacks.ICEBEAM,
       attacks.REST,
