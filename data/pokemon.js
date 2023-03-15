@@ -48,4 +48,27 @@ export const pokemon = {
     ],
     size: 3,
   },
+  Rhydon: {
+    position: {
+      x: 290,
+      y: 10,
+    },
+    name: "RHYDON",
+    health: 180,
+    stats: [180, 150, 140, 65, 60],
+    backSprite: {
+      src: "../images/pokemon/rhydon.png",
+    },
+    frontSprite: {
+      src: "../images/pokemon/rhydon.png",
+    },
+    types: [Types.ROCK],
+    attacks: [
+      attacks.EARTHQUAKE,
+      attacks.BODYSLAM,
+      attacks.ROCKSLIDE,
+      attacks.REST,
+    ],
+    size: 3,
+  },
 };

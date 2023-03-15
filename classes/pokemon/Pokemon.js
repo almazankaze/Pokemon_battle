@@ -39,10 +39,6 @@ export default class Pokemon extends Sprite {
     this.gotCrit = false;
     this.stages = [0, 0, 0, 0, 0];
     this.sleepCounter = 0;
-
-    if (this.isEnemy) {
-      this.frames = { ...this.frames, max: 5, hold: 10 };
-    }
   }
 
   randomIntFromInterval(min, max) {

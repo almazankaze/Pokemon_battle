@@ -2,7 +2,7 @@ import Pokemon from "./Pokemon.js";
 import BodySlam from "../attacks/BodySlam.js";
 import Earthquake from "../attacks/Earthquake.js";
 
-export default class Blastoise extends Pokemon {
+export default class Rhydon extends Pokemon {
   constructor({
     name,
     health,
@@ -40,6 +40,7 @@ export default class Blastoise extends Pokemon {
     this.attacks = attacks;
     this.moves = {};
     this.moves["EARTHQUAKE"] = new Earthquake(attacks[0]);
+    this.moves["BODY SLAM"] = new BodySlam(attacks[1]);
   }
 
   getMovePP(attack) {
@@ -70,7 +71,6 @@ export default class Blastoise extends Pokemon {
           recipient
         );
         break;
-
       case "EARTHQUAKE":
         mult = this.getMultiplier(this.stages[1]);
         this.didHit = this.moves["EARTHQUAKE"].useMove(
@@ -90,13 +90,21 @@ export default class Blastoise extends Pokemon {
   getWeakness(attackType) {
     switch (attackType) {
       case "Grass":
-      case "Electric":
-        return 2;
       case "Water":
-      case "Steel":
-      case "Fire":
+        return 4;
+      case "Fighting":
+      case "Ground":
       case "Ice":
+        return 2;
+      case "Electric":
+        return 0;
+      case "Normal":
+      case "Flying":
+      case "Fire":
+      case "Rock":
         return 0.5;
+      case "Poison":
+        return 0.25;
       default:
         return 1;
     }
