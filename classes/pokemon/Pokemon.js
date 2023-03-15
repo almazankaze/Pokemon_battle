@@ -206,7 +206,7 @@ export default class Pokemon extends Sprite {
     const t = gsap.timeline();
 
     t.to(this.frontSprite, {
-      duration: 0.4,
+      duration: 0.5,
       repeat: 1,
 
       onComplete: () => {
