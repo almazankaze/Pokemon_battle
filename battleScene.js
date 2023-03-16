@@ -51,9 +51,9 @@ window.addEventListener("resize", reSizeSprites, false);
 function reSizeSprites() {
   if (window.innerWidth < 500) {
     enemyTeam[currentEnemy].reDraw(2, 175, 10);
-    playerTeam[currentPlayer].reDraw(2, 15, 108);
+    playerTeam[currentPlayer].reDraw(2, 30, 108);
   } else {
-    enemyTeam[currentEnemy].reDraw(3, 280, 10);
+    enemyTeam[currentEnemy].reDraw(3, 290, 10);
     playerTeam[currentPlayer].reDraw(3, 25, 152);
   }
 
@@ -109,7 +109,7 @@ function addEventsToAttacks() {
       const selectedAttack = attacks[e.currentTarget.id];
 
       // random attack
-      let enemyAttack = 3;
+      let enemyAttack = enemyTeam[currentEnemy].chooseMove();
       const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
 
       takeTurn(

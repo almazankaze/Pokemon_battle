@@ -27,7 +27,7 @@ export const pokemon = {
   },
   Blastoise: {
     position: {
-      x: 280,
+      x: 290,
       y: 10,
     },
     name: "BLASTOISE",

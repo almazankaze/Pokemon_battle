@@ -1,6 +1,8 @@
 import Pokemon from "./Pokemon.js";
 import BodySlam from "../attacks/BodySlam.js";
 import Earthquake from "../attacks/Earthquake.js";
+import SwordDance from "../attacks/SwordDance.js";
+import Flamethrower from "../attacks/Flamethrower.js";
 
 export default class Charizard extends Pokemon {
   constructor({
@@ -40,7 +42,12 @@ export default class Charizard extends Pokemon {
     this.attacks = attacks;
     this.moves = {};
     this.moves["BODY SLAM"] = new BodySlam(attacks[0]);
+    this.moves["FLAMETHROWER"] = new Flamethrower({
+      ...attacks[1],
+      isStab: true,
+    });
     this.moves["EARTHQUAKE"] = new Earthquake(attacks[2]);
+    this.moves["SWORD DANCE"] = new SwordDance(attacks[3]);
   }
 
   getMovePP(attack) {
@@ -71,6 +78,16 @@ export default class Charizard extends Pokemon {
           recipient
         );
         break;
+      case "FLAMETHROWER":
+        mult = this.getMultiplier(this.stages[3]);
+        this.didHit = this.moves["FLAMETHROWER"].useMove(
+          this.position,
+          this.stats[3],
+          mult,
+          recipient,
+          renderedSprites
+        );
+        break;
       case "EARTHQUAKE":
         mult = this.getMultiplier(this.stages[1]);
         this.didHit = this.moves["EARTHQUAKE"].useMove(
@@ -79,6 +96,15 @@ export default class Charizard extends Pokemon {
           mult,
           recipient
         );
+        break;
+      case "SWORD DANCE":
+        this.stages[1] = this.moves["SWORD DANCE"].useMove(
+          this.position,
+          this.size,
+          this.stages[1],
+          renderedSprites
+        );
+        this.didHit = 1;
         break;
     }
 

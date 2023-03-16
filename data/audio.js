@@ -26,6 +26,20 @@ export const rockslide = new Howl({
   loop: false,
 });
 
+export const flamethrower = new Howl({
+  src: "./audio/attacks/flamethrower.wav",
+  html5: true,
+  volume: 0.3,
+  loop: false,
+});
+
+export const swordsDance = new Howl({
+  src: "./audio/attacks/swordsDance.wav",
+  html5: true,
+  volume: 0.3,
+  loop: false,
+});
+
 export const hit = new Howl({
   src: "./audio/other/get-hit.wav",
   html5: true,
@@ -40,6 +54,12 @@ export const sleeping = new Howl({
 });
 
 export const pokemonCry = {
+  CHARIZARD: new Howl({
+    src: "./audio/pokemon/audio_charizard.wav",
+    html5: true,
+    volume: 0.3,
+    loop: false,
+  }),
   BLASTOISE: new Howl({
     src: "./audio/pokemon/audio_blastoise.wav",
     html5: true,
