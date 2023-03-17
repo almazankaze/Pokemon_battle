@@ -71,4 +71,28 @@ export const pokemon = {
     ],
     size: 3,
   },
+
+  Mew: {
+    position: {
+      x: 25,
+      y: 152,
+    },
+    name: "MEW",
+    health: 175,
+    stats: [175, 120, 120, 120, 120],
+    backSprite: {
+      src: "./images/pokemon/MewBack.png",
+    },
+    frontSprite: {
+      src: "./images/pokemon/Mew.png",
+    },
+    types: [Types.PSYCHIC],
+    attacks: [
+      attacks.SWORDDANCE,
+      attacks.EARTHQUAKE,
+      attacks.BODYSLAM,
+      attacks.RECOVER,
+    ],
+    size: 3,
+  },
 };

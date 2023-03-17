@@ -6,6 +6,7 @@ import Messages from "./classes/Messages.js";
 import Charizard from "./classes/pokemon/Charizard.js";
 import Blastoise from "./classes/pokemon/Blastoise.js";
 import Rhydon from "./classes/pokemon/Rhydon.js";
+import Mew from "./classes/pokemon/Mew.js";
 
 let queue = [];
 let renderedSprites;
@@ -20,7 +21,7 @@ let numEnemyLeft = 6;
 
 const messages = new Messages();
 
-playerTeam = [new Charizard(pokemon.Charizard)];
+playerTeam = [new Mew(pokemon.Mew), new Charizard(pokemon.Charizard)];
 enemyTeam = [
   new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
   new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),
