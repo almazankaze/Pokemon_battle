@@ -1,5 +1,5 @@
 import Sprite from "./Sprite.js";
-import { sleeping } from "../data/audio.js";
+import { sleeping, frozen } from "../data/audio.js";
 
 export default class Messages {
   constructor() {
@@ -198,7 +198,7 @@ export default class Messages {
     if (pokemon.size === 2) y = 45;
 
     const iceImg = new Image();
-    iceImg.src = "./img/effects/frozen.png";
+    iceImg.src = "./images/effects/frozen.png";
     const ice = new Sprite({
       position: {
         x: pokemon.position.x,
@@ -210,11 +210,11 @@ export default class Messages {
 
     renderedSprites.splice(2, 0, ice);
 
-    audio.frozen.play();
+    frozen.play();
 
     const t = gsap.timeline({
       onComplete: () => {
-        audio.frozen.play();
+        frozen.play();
         renderedSprites.splice(2, 1);
         document.querySelector("#menu").classList.remove("loading");
       },

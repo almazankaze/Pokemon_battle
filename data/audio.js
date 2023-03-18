@@ -151,6 +151,12 @@ export const sleeping = new Howl({
   volume: 0.3,
 });
 
+export const frozen = new Howl({
+  src: "./audio/other/frozen.wav",
+  html5: true,
+  volume: 0.3,
+});
+
 export const pokemonCry = {
   CHARIZARD: new Howl({
     src: "./audio/pokemon/audio_charizard.wav",

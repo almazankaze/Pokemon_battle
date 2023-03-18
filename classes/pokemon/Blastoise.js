@@ -1,6 +1,8 @@
 import Pokemon from "./Pokemon.js";
-import BodySlam from "../attacks/BodySlam.js";
 import Earthquake from "../attacks/Earthquake.js";
+import HydroPump from "../attacks/HydroPump.js";
+import Rest from "../attacks/Rest.js";
+import IceBeam from "../attacks/IceBeam.js";
 
 export default class Blastoise extends Pokemon {
   constructor({
@@ -40,6 +42,9 @@ export default class Blastoise extends Pokemon {
     this.attacks = attacks;
     this.moves = {};
     this.moves["EARTHQUAKE"] = new Earthquake(attacks[0]);
+    this.moves["HYDRO PUMP"] = new HydroPump({ ...attacks[1], isStab: true });
+    this.moves["ICE BEAM"] = new IceBeam(attacks[2]);
+    this.moves["REST"] = new Rest(attacks[3]);
   }
 
   getMovePP(attack) {
@@ -61,16 +66,6 @@ export default class Blastoise extends Pokemon {
     let mult;
 
     switch (attack.name) {
-      case "BODY SLAM":
-        mult = this.getMultiplier(this.stages[1]);
-        this.didHit = this.moves["BODY SLAM"].useMove(
-          this.position,
-          this.stats[1],
-          mult,
-          recipient
-        );
-        break;
-
       case "EARTHQUAKE":
         mult = this.getMultiplier(this.stages[1]);
         this.didHit = this.moves["EARTHQUAKE"].useMove(
@@ -78,6 +73,39 @@ export default class Blastoise extends Pokemon {
           this.stats[1],
           mult,
           recipient
+        );
+        break;
+      case "REST":
+        this.didHit = this.moves["REST"].useMove(this.health, this.stats[0]);
+
+        if (this.didHit === 1) {
+          this.recoverHealth(this.stats[0]);
+          this.status = "sleeping";
+          this.sleepCounter = 2;
+
+          if (this.isEnemy)
+            document.querySelector("#enemyStatus").innerHTML = "SLP";
+          else document.querySelector("#playerStatus").innerHTML = "SLP";
+        }
+
+        break;
+      case "ICE BEAM":
+        mult = this.getMultiplier(this.stages[3]);
+        this.didHit = this.moves["ICE BEAM"].useMove(
+          this.position,
+          this.stats[3],
+          mult,
+          recipient,
+          renderedSprites
+        );
+        break;
+      case "HYDRO PUMP":
+        mult = this.getMultiplier(this.stages[3]);
+        this.didHit = this.moves["HYDRO PUMP"].useMove(
+          this.stats[3],
+          mult,
+          recipient,
+          renderedSprites
         );
         break;
     }

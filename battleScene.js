@@ -23,8 +23,8 @@ const messages = new Messages();
 
 playerTeam = [new Mew(pokemon.Mew), new Charizard(pokemon.Charizard)];
 enemyTeam = [
-  new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
   new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),
+  new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
 ];
 
 let userInterface = document.querySelector("#userInterface");
