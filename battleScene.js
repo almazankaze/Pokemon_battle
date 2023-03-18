@@ -7,6 +7,7 @@ import Charizard from "./classes/pokemon/Charizard.js";
 import Blastoise from "./classes/pokemon/Blastoise.js";
 import Rhydon from "./classes/pokemon/Rhydon.js";
 import Mew from "./classes/pokemon/Mew.js";
+import Snorlax from "./classes/pokemon/Snorlax.js";
 
 let queue = [];
 let renderedSprites;
@@ -21,7 +22,11 @@ let numEnemyLeft = 6;
 
 const messages = new Messages();
 
-playerTeam = [new Mew(pokemon.Mew), new Charizard(pokemon.Charizard)];
+playerTeam = [
+  new Snorlax(pokemon.Snorlax),
+  new Mew(pokemon.Mew),
+  new Charizard(pokemon.Charizard),
+];
 enemyTeam = [
   new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),
   new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
@@ -52,10 +57,10 @@ window.addEventListener("resize", reSizeSprites, false);
 function reSizeSprites() {
   if (window.innerWidth < 500) {
     enemyTeam[currentEnemy].reDraw(2, 175, 10);
-    playerTeam[currentPlayer].reDraw(2, 30, 108);
+    playerTeam[currentPlayer].reDraw(2, 30, 98);
   } else {
     enemyTeam[currentEnemy].reDraw(3, 290, 10);
-    playerTeam[currentPlayer].reDraw(3, 25, 152);
+    playerTeam[currentPlayer].reDraw(3, 25, 128);
   }
 
   reDraw();

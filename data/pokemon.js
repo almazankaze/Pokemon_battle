@@ -5,7 +5,7 @@ export const pokemon = {
   Charizard: {
     position: {
       x: 25,
-      y: 152,
+      y: 128,
     },
     name: "CHARIZARD",
     health: 152,
@@ -75,7 +75,7 @@ export const pokemon = {
   Mew: {
     position: {
       x: 25,
-      y: 152,
+      y: 128,
     },
     name: "MEW",
     health: 175,
@@ -92,6 +92,29 @@ export const pokemon = {
       attacks.EARTHQUAKE,
       attacks.BODYSLAM,
       attacks.RECOVER,
+    ],
+    size: 3,
+  },
+  Snorlax: {
+    position: {
+      x: 25,
+      y: 128,
+    },
+    name: "SNORLAX",
+    health: 245,
+    stats: [245, 130, 85, 85, 50],
+    backSprite: {
+      src: "./images/pokemon/snorlaxBack.png",
+    },
+    frontSprite: {
+      src: "./images/pokemon/snorlaxFront.png",
+    },
+    types: [Types.NORMAL],
+    attacks: [
+      attacks.EARTHQUAKE,
+      attacks.REST,
+      attacks.BODYSLAM,
+      attacks.ICEBEAM,
     ],
     size: 3,
   },
