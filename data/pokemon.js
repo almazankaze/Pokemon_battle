@@ -118,4 +118,73 @@ export const pokemon = {
     ],
     size: 3,
   },
+  Exeggutor: {
+    position: {
+      x: 290,
+      y: 10,
+    },
+    name: "EXEGGUTOR",
+    health: 170,
+    stats: [170, 115, 105, 145, 75],
+    backSprite: {
+      src: "./images/pokemon/exeggutor.png",
+    },
+    frontSprite: {
+      src: "./images/pokemon/exeggutor.png",
+    },
+    types: [Types.GRASS, Types.PSYCHIC],
+    attacks: [
+      attacks.PSYCHIC,
+      attacks.STOMP,
+      attacks.SLEEPPOWDER,
+      attacks.MEGADRAIN,
+    ],
+    size: 3,
+  },
+  Mewtwo: {
+    position: {
+      x: 290,
+      y: 10,
+    },
+    name: "MEWTWO",
+    health: 181,
+    stats: [181, 130, 110, 174, 150],
+    backSprite: {
+      src: "./images/pokemon/mewtwo.png",
+    },
+    frontSprite: {
+      src: "./images/pokemon/mewtwo.png",
+    },
+    types: [Types.PSYCHIC],
+    attacks: [
+      attacks.PSYCHIC,
+      attacks.ICEBEAM,
+      attacks.AMNESIA,
+      attacks.RECOVER,
+    ],
+    size: 3,
+  },
+  Jolteon: {
+    position: {
+      x: 25,
+      y: 128,
+    },
+    name: "JOLTEON",
+    health: 140,
+    stats: [140, 85, 80, 130, 150],
+    backSprite: {
+      src: "./images/pokemon/joltBack.png",
+    },
+    frontSprite: {
+      src: "./images/pokemon/jolteon.png",
+    },
+    types: [Types.ELECTRIC],
+    attacks: [
+      attacks.REST,
+      attacks.THUNDERBOLT,
+      attacks.DOUBLEKICK,
+      attacks.THUNDERWAVE,
+    ],
+    size: 3,
+  },
 };

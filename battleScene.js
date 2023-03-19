@@ -8,6 +8,9 @@ import Blastoise from "./classes/pokemon/Blastoise.js";
 import Rhydon from "./classes/pokemon/Rhydon.js";
 import Mew from "./classes/pokemon/Mew.js";
 import Snorlax from "./classes/pokemon/Snorlax.js";
+import Exeggutor from "./classes/pokemon/Exeggutor.js";
+import MewTwo from "./classes/pokemon/MewTwo.js";
+import Jolteon from "./classes/pokemon/Jolteon.js";
 
 let queue = [];
 let renderedSprites;
@@ -23,11 +26,14 @@ let numEnemyLeft = 6;
 const messages = new Messages();
 
 playerTeam = [
+  new Jolteon(pokemon.Jolteon),
   new Snorlax(pokemon.Snorlax),
   new Mew(pokemon.Mew),
   new Charizard(pokemon.Charizard),
 ];
 enemyTeam = [
+  new MewTwo({ ...pokemon.Mewtwo, isEnemy: true }),
+  new Exeggutor({ ...pokemon.Exeggutor, isEnemy: true }),
   new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),
   new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
 ];
