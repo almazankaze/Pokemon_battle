@@ -210,4 +210,27 @@ export const pokemon = {
     ],
     size: 3,
   },
+  Gyarados: {
+    position: {
+      x: 25,
+      y: 128,
+    },
+    name: "GYARADOS",
+    health: 170,
+    stats: [170, 145, 99, 120, 101],
+    backSprite: {
+      src: "./images/pokemon/gyaraBack.png",
+    },
+    frontSprite: {
+      src: "./images/pokemon/gyaraBack.png",
+    },
+    types: [Types.WATER, Types.FLYING],
+    attacks: [
+      attacks.THUNDERBOLT,
+      attacks.HYDROPUMP,
+      attacks.ICEBEAM,
+      attacks.DRAGONRAGE,
+    ],
+    size: 3,
+  },
 };

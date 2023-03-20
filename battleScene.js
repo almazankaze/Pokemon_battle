@@ -12,6 +12,7 @@ import Exeggutor from "./classes/pokemon/Exeggutor.js";
 import MewTwo from "./classes/pokemon/MewTwo.js";
 import Jolteon from "./classes/pokemon/Jolteon.js";
 import Gengar from "./classes/pokemon/Gengar.js";
+import Gyarados from "./classes/pokemon/Gyarados.js";
 
 let queue = [];
 let renderedSprites;
@@ -27,6 +28,7 @@ let numEnemyLeft = 6;
 const messages = new Messages();
 
 playerTeam = [
+  new Gyarados(pokemon.Gyarados),
   new Gengar(pokemon.Gengar),
   new Jolteon(pokemon.Jolteon),
   new Snorlax(pokemon.Snorlax),
