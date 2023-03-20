@@ -1,10 +1,10 @@
 import Pokemon from "./Pokemon.js";
-import IceBeam from "../attacks/IceBeam.js";
-import Recover from "../attacks/Recover.js";
 import Psychic from "../attacks/Psychic.js";
-import Amnesia from "../attacks/Amnesia.js";
+import NightShade from "../attacks/NightShade.js";
+import Hypnosis from "../attacks/Hypnosis.js";
+import MegaDrain from "../attacks/MegaDrain.js";
 
-export default class MewTwo extends Pokemon {
+export default class Gengar extends Pokemon {
   constructor({
     name,
     health,
@@ -16,7 +16,7 @@ export default class MewTwo extends Pokemon {
     position,
     frontSprite,
     backSprite,
-    frames = { max: 6, hold: 10 },
+    frames,
     sprites,
     animate,
     rotation,
@@ -41,10 +41,10 @@ export default class MewTwo extends Pokemon {
 
     this.attacks = attacks;
     this.moves = {};
-    this.moves["PSYCHIC"] = new Psychic({ ...attacks[0], isStab: true });
-    this.moves["ICE BEAM"] = new IceBeam(attacks[1]);
-    this.moves["AMNESIA"] = new Amnesia(attacks[2]);
-    this.moves["RECOVER"] = new Recover(attacks[3]);
+    this.moves["PSYCHIC"] = new Psychic(attacks[0]);
+    this.moves["MEGA DRAIN"] = new MegaDrain(attacks[1]);
+    this.moves["HYPNOSIS"] = new Hypnosis(attacks[2]);
+    this.moves["NIGHT SHADE"] = new NightShade(attacks[3]);
   }
 
   getMovePP(attack) {
@@ -76,9 +76,9 @@ export default class MewTwo extends Pokemon {
           renderedSprites
         );
         break;
-      case "ICE BEAM":
+      case "MEGA DRAIN":
         mult = this.getMultiplier(this.stages[3]);
-        this.didHit = this.moves["ICE BEAM"].useMove(
+        this.didHit = this.moves["MEGA DRAIN"].useMove(
           this.position,
           this.stats[3],
           mult,
@@ -86,30 +86,11 @@ export default class MewTwo extends Pokemon {
           renderedSprites
         );
         break;
-      case "AMNESIA":
-        this.stages[3] = this.moves["AMNESIA"].useMove(
-          this.position,
-          this.size,
-          this.stages[3],
-          renderedSprites
-        );
-        this.didHit = 1;
+      case "HYPNOSIS":
+        this.didHit = this.moves["HYPNOSIS"].useMove(recipient);
         break;
-      case "RECOVER":
-        this.didHit = this.moves["RECOVER"].useMove(this.health, this.stats[0]);
-
-        if (this.didHit === 1) {
-          gsap.to(this, {
-            opacity: 0,
-            repeat: 10,
-            yoyo: true,
-            duration: 0.1,
-            onComplete: () => {
-              this.opacity = 1;
-              this.recoverHealth(Math.floor(this.stats[0] / 2));
-            },
-          });
-        }
+      case "NIGHT SHADE":
+        this.didHit = this.moves["NIGHT SHADE"].useMove(recipient);
         break;
     }
 
@@ -120,24 +101,24 @@ export default class MewTwo extends Pokemon {
 
   getWeakness(attackType) {
     switch (attackType) {
-      case "Bug":
+      case "Ground":
+      case "Psychic":
       case "Ghost":
         return 2;
-      case "Fighting":
-      case "Psychic":
+      case "Bug":
+      case "Grass":
         return 0.5;
+      case "Poison":
+        return 0.25;
+      case "Normal":
+      case "Fighting":
+        return 0;
       default:
         return 1;
     }
   }
 
-  chooseMove() {
-    let dangerHealth = Math.floor(this.stats[0] * 0.25);
-
-    if (this.health <= dangerHealth) {
-      return 3;
-    }
-
-    return Math.floor(Math.random() * 3);
+  getHpToAbsorb() {
+    return this.megaDrain.healthToAbsorb;
   }
 }

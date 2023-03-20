@@ -11,6 +11,7 @@ import Snorlax from "./classes/pokemon/Snorlax.js";
 import Exeggutor from "./classes/pokemon/Exeggutor.js";
 import MewTwo from "./classes/pokemon/MewTwo.js";
 import Jolteon from "./classes/pokemon/Jolteon.js";
+import Gengar from "./classes/pokemon/Gengar.js";
 
 let queue = [];
 let renderedSprites;
@@ -26,6 +27,7 @@ let numEnemyLeft = 6;
 const messages = new Messages();
 
 playerTeam = [
+  new Gengar(pokemon.Gengar),
   new Jolteon(pokemon.Jolteon),
   new Snorlax(pokemon.Snorlax),
   new Mew(pokemon.Mew),
@@ -62,8 +64,8 @@ window.addEventListener("resize", reSizeSprites, false);
 
 function reSizeSprites() {
   if (window.innerWidth < 500) {
-    enemyTeam[currentEnemy].reDraw(2, 175, 10);
-    playerTeam[currentPlayer].reDraw(2, 30, 98);
+    enemyTeam[currentEnemy].reDraw(2, 190, 10);
+    playerTeam[currentPlayer].reDraw(2, 10, 98);
   } else {
     enemyTeam[currentEnemy].reDraw(3, 290, 10);
     playerTeam[currentPlayer].reDraw(3, 25, 128);
@@ -121,7 +123,7 @@ function addEventsToAttacks() {
       const selectedAttack = attacks[e.currentTarget.id];
 
       // random attack
-      let enemyAttack = enemyTeam[currentEnemy].chooseMove();
+      let enemyAttack = 0;
       const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
 
       takeTurn(
