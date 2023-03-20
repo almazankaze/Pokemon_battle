@@ -28,9 +28,9 @@ let numEnemyLeft = 6;
 const messages = new Messages();
 
 playerTeam = [
-  new Gyarados(pokemon.Gyarados),
-  new Gengar(pokemon.Gengar),
   new Jolteon(pokemon.Jolteon),
+  new Gengar(pokemon.Gengar),
+  new Gyarados(pokemon.Gyarados),
   new Snorlax(pokemon.Snorlax),
   new Mew(pokemon.Mew),
   new Charizard(pokemon.Charizard),
@@ -74,6 +74,10 @@ function reSizeSprites() {
   }
 
   reDraw();
+}
+
+function randomIntFromInterval(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 reSizeSprites();
@@ -125,27 +129,60 @@ function addEventsToAttacks() {
       const selectedAttack = attacks[e.currentTarget.id];
 
       // random attack
-      let enemyAttack = 0;
+      let enemyAttack = enemyTeam[currentEnemy].chooseMove();
       const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
 
-      takeTurn(
-        playerTeam[currentPlayer],
-        selectedAttack,
-        enemyTeam[currentEnemy],
-        renderedSprites,
-        queue,
-        battleAnimationId
-      );
+      if (
+        playerTeam[currentPlayer].getSpeed() >
+        enemyTeam[currentEnemy].getSpeed()
+      )
+        speedWinner = 1;
+      else if (
+        enemyTeam[currentEnemy].getSpeed() >
+        playerTeam[currentPlayer].getSpeed()
+      )
+        speedWinner = 2;
+      else speedWinner = randomIntFromInterval(1, 2);
 
-      queue.push(() => {
+      if (speedWinner === 1) {
+        takeTurn(
+          playerTeam[currentPlayer],
+          selectedAttack,
+          enemyTeam[currentEnemy],
+          renderedSprites,
+          queue,
+          battleAnimationId
+        );
+
+        queue.push(() => {
+          takeTurn(
+            enemyTeam[currentEnemy],
+            randomAttack,
+            playerTeam[currentPlayer],
+            renderedSprites,
+            queue
+          );
+        });
+      } else {
         takeTurn(
           enemyTeam[currentEnemy],
           randomAttack,
           playerTeam[currentPlayer],
           renderedSprites,
-          queue
+          queue,
+          battleAnimationId
         );
-      });
+
+        queue.push(() => {
+          takeTurn(
+            playerTeam[currentPlayer],
+            selectedAttack,
+            enemyTeam[currentEnemy],
+            renderedSprites,
+            queue
+          );
+        });
+      }
 
       if (playerTeam[currentPlayer].getMovePP(selectedAttack) <= 0) {
         b.disabled = true;

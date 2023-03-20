@@ -68,6 +68,13 @@ export default class Psychic extends Attack {
 
     psychic.play();
 
+    gsap.to(recipient, {
+      opacity: 0,
+      repeat: 5,
+      yoyo: true,
+      duration: 0.2,
+    });
+
     // animate sprite
     gsap.to(psychicObj.position, {
       x: recipient.position.x + 80,
@@ -77,6 +84,7 @@ export default class Psychic extends Attack {
 
       onComplete: () => {
         // Enemy actually gets hit
+        recipient.opacity = 1;
         this.hitAndDamage(recipient, damage);
         renderedSprites.splice(2, 1);
       },
