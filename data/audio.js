@@ -131,6 +131,13 @@ export const thunderWave = new Howl({
   loop: false,
 });
 
+export const dragonRage = new Howl({
+  src: "./audio/attacks/dragonRage.wav",
+  html5: true,
+  volume: 0.3,
+  loop: false,
+});
+
 export const recover = new Howl({
   src: "./audio/attacks/recover.wav",
   html5: true,

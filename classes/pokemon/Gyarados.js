@@ -1,6 +1,7 @@
 import Pokemon from "./Pokemon.js";
 import HydroPump from "../attacks/HydroPump.js";
 import ThunderBolt from "../attacks/ThunderBolt.js";
+import DragonRage from "../attacks/DragonRage.js";
 
 export default class Gyarados extends Pokemon {
   constructor({
@@ -41,6 +42,7 @@ export default class Gyarados extends Pokemon {
     this.moves = {};
     this.moves["THUNDERBOLT"] = new ThunderBolt(attacks[0]);
     this.moves["HYDRO PUMP"] = new HydroPump({ ...attacks[1], isStab: true });
+    this.moves["DRAGON RAGE"] = new DragonRage(attacks[3]);
   }
 
   getMovePP(attack) {

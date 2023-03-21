@@ -28,9 +28,9 @@ let numEnemyLeft = 6;
 const messages = new Messages();
 
 playerTeam = [
+  new Gyarados(pokemon.Gyarados),
   new Jolteon(pokemon.Jolteon),
   new Gengar(pokemon.Gengar),
-  new Gyarados(pokemon.Gyarados),
   new Snorlax(pokemon.Snorlax),
   new Mew(pokemon.Mew),
   new Charizard(pokemon.Charizard),
