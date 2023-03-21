@@ -219,4 +219,10 @@ export const pokemonCry = {
     volume: 0.3,
     loop: false,
   }),
+  DRAGONITE: new Howl({
+    src: "./audio/pokemon/audio_dragonite.wav",
+    html5: true,
+    volume: 0.3,
+    loop: false,
+  }),
 };

@@ -233,4 +233,27 @@ export const pokemon = {
     ],
     size: 3,
   },
+  Dragonite: {
+    position: {
+      x: 290,
+      y: 10,
+    },
+    name: "DRAGONITE",
+    health: 166,
+    stats: [166, 154, 115, 120, 100],
+    backSprite: {
+      src: "./images/pokemon/dragonite.png",
+    },
+    frontSprite: {
+      src: "./images/pokemon/dragonite.png",
+    },
+    types: [Types.DRAGON, Types.FLYING],
+    attacks: [
+      attacks.BODYSLAM,
+      attacks.THUNDERBOLT,
+      attacks.ICEBEAM,
+      attacks.DRAGONRAGE,
+    ],
+    size: 3,
+  },
 };

@@ -13,6 +13,7 @@ import MewTwo from "./classes/pokemon/MewTwo.js";
 import Jolteon from "./classes/pokemon/Jolteon.js";
 import Gengar from "./classes/pokemon/Gengar.js";
 import Gyarados from "./classes/pokemon/Gyarados.js";
+import Dragonite from "./classes/pokemon/Dragonite.js";
 
 let queue = [];
 let renderedSprites;
@@ -36,6 +37,7 @@ playerTeam = [
   new Charizard(pokemon.Charizard),
 ];
 enemyTeam = [
+  new Dragonite({ ...pokemon.Dragonite, isEnemy: true }),
   new MewTwo({ ...pokemon.Mewtwo, isEnemy: true }),
   new Exeggutor({ ...pokemon.Exeggutor, isEnemy: true }),
   new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),
