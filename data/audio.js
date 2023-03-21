@@ -145,6 +145,13 @@ export const recover = new Howl({
   loop: false,
 });
 
+export const hyperBeam = new Howl({
+  src: "./audio/attacks/HyperBeamLaser.wav",
+  html5: true,
+  volume: 0.3,
+  loop: false,
+});
+
 export const hit = new Howl({
   src: "./audio/other/get-hit.wav",
   html5: true,

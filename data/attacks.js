@@ -233,4 +233,15 @@ export const attacks = {
     pp: 20,
     acc: 100,
   },
+  HYPERBEAM: {
+    id: "HYPERBEAM",
+    name: "HYPERBEAM",
+    power: 150,
+    type: Types.NORMAL,
+    moveType: 1,
+    tagetStat: 2,
+    status: { canStatus: false, chance: 0, type: "" },
+    pp: 5,
+    acc: 90,
+  },
 };

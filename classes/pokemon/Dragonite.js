@@ -2,6 +2,7 @@ import Pokemon from "./Pokemon.js";
 import BodySlam from "../attacks/BodySlam.js";
 import ThunderBolt from "../attacks/ThunderBolt.js";
 import IceBeam from "../attacks/IceBeam.js";
+import HyperBeam from "../attacks/HyperBeam.js";
 
 export default class Dragonite extends Pokemon {
   constructor({
@@ -43,6 +44,7 @@ export default class Dragonite extends Pokemon {
     this.moves["BODY SLAM"] = new BodySlam(attacks[0]);
     this.moves["THUNDERBOLT"] = new ThunderBolt(attacks[1]);
     this.moves["Ice BEAM"] = new IceBeam(attacks[2]);
+    this.moves["HYPERBEAM"] = new HyperBeam(attacks[3]);
   }
 
   getMovePP(attack) {
@@ -88,6 +90,16 @@ export default class Dragonite extends Pokemon {
         this.didHit = this.moves["ICE BEAM"].useMove(
           this.position,
           this.stats[3],
+          mult,
+          recipient,
+          renderedSprites
+        );
+        break;
+      case "HYPERBEAM":
+        mult = this.getMultiplier(this.stages[1]);
+        this.didHit = this.moves["HYPERBEAM"].useMove(
+          this.position,
+          this.stats[1],
           mult,
           recipient,
           renderedSprites

@@ -131,7 +131,7 @@ function addEventsToAttacks() {
       const selectedAttack = attacks[e.currentTarget.id];
 
       // random attack
-      let enemyAttack = enemyTeam[currentEnemy].chooseMove();
+      let enemyAttack = 3;
       const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
 
       if (

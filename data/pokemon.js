@@ -252,7 +252,7 @@ export const pokemon = {
       attacks.BODYSLAM,
       attacks.THUNDERBOLT,
       attacks.ICEBEAM,
-      attacks.DRAGONRAGE,
+      attacks.HYPERBEAM,
     ],
     size: 3,
   },
