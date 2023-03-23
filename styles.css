@@ -66,8 +66,9 @@ h2 {
 }
 
 .selectContainer {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  text-align: center;
   padding: 1rem;
   margin: 0.75rem 0;
   background-color: #ccc;

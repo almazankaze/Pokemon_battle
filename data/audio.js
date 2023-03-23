@@ -171,6 +171,12 @@ export const frozen = new Howl({
   volume: 0.3,
 });
 
+export const ball = new Howl({
+  src: "./audio/other/ball_poof.wav",
+  html5: true,
+  volume: 0.3,
+});
+
 export const pokemonCry = {
   CHARIZARD: new Howl({
     src: "./audio/pokemon/audio_charizard.wav",
@@ -228,6 +234,12 @@ export const pokemonCry = {
   }),
   DRAGONITE: new Howl({
     src: "./audio/pokemon/audio_dragonite.wav",
+    html5: true,
+    volume: 0.3,
+    loop: false,
+  }),
+  GYARADOS: new Howl({
+    src: "./audio/pokemon/audio_gyarados.wav",
     html5: true,
     volume: 0.3,
     loop: false,
