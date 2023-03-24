@@ -69,9 +69,11 @@ export default class Exeggutor extends Pokemon {
       case "PSYCHIC":
         mult = this.getMultiplier(this.stages[3]);
         this.didHit = this.moves["PSYCHIC"].useMove(
+          this.position,
           this.stats[3],
           mult,
-          recipient
+          recipient,
+          renderedSprites
         );
         break;
       case "STOMP":

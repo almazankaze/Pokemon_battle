@@ -31,10 +31,10 @@ let numEnemyLeft = 6;
 const messages = new Messages();
 
 playerTeam = [
+  new Snorlax(pokemon.Snorlax),
   new Gyarados(pokemon.Gyarados),
   new Jolteon(pokemon.Jolteon),
   new Gengar(pokemon.Gengar),
-  new Snorlax(pokemon.Snorlax),
   new Mew(pokemon.Mew),
   new Charizard(pokemon.Charizard),
 ];
@@ -163,19 +163,34 @@ function addEventsToAttacks() {
         );
 
         queue.push(() => {
-          enemyMove();
+          enemyMove(true);
         });
       } else {
-        enemyMove();
+        enemyMove(false);
 
         queue.push(() => {
-          takeTurn(
-            playerTeam[currentPlayer],
-            selectedAttack,
-            enemyTeam[currentEnemy],
-            renderedSprites,
-            queue
-          );
+          if (playerTeam[currentPlayer].health >= 1) {
+            takeTurn(
+              playerTeam[currentPlayer],
+              selectedAttack,
+              enemyTeam[currentEnemy],
+              renderedSprites,
+              queue
+            );
+
+            queue.push(() => {
+              enemyEndTurn();
+            });
+          } else {
+            faintPokemon(playerTeam[currentPlayer], queue, battleAnimationId);
+
+            numPlayerLeft -= 1;
+
+            queue.push(() => {
+              if (numPlayerLeft <= 0) finishBattle(battleAnimationId);
+              else goToSelectScreen(true);
+            });
+          }
         });
       }
 
@@ -219,7 +234,7 @@ function createPokemonSelectScreen() {
           // send out next pokemon
           sendOutPlayerPoke(p.id);
 
-          queue.push(() => enemyMove());
+          queue.push(() => enemyMove(true));
         });
     });
   });
@@ -447,7 +462,7 @@ export function createAttacks() {
 }
 
 /***** Enemy turn ****/
-function enemyMove() {
+function enemyMove(checkPlayerHealth) {
   let enemyAttack = enemyTeam[currentEnemy].chooseMove();
   const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
 
@@ -459,7 +474,43 @@ function enemyMove() {
       renderedSprites,
       queue
     );
+
+    if (checkPlayerHealth) {
+      queue.push(() => {
+        playerEndTurn();
+      });
+    }
   } else {
+    faintPokemon(enemyTeam[currentEnemy], queue, battleAnimationId);
+
+    numEnemyLeft -= 1;
+
+    queue.push(() => {
+      // enemy sends out next pokemon if they can
+      if (numEnemyLeft <= 0) {
+        finishBattle(battleAnimationId);
+      } else sendOutNext();
+    });
+  }
+}
+
+/**** Player end turn ****/
+function playerEndTurn() {
+  if (playerTeam[currentPlayer].health <= 0) {
+    faintPokemon(playerTeam[currentPlayer], queue, battleAnimationId);
+
+    numPlayerLeft -= 1;
+
+    queue.push(() => {
+      if (numPlayerLeft <= 0) finishBattle(battleAnimationId);
+      else goToSelectScreen(true);
+    });
+  }
+}
+
+/**** Enemy end turn ****/
+function enemyEndTurn() {
+  if (enemyTeam[currentEnemy].health <= 0) {
     faintPokemon(enemyTeam[currentEnemy], queue, battleAnimationId);
 
     numEnemyLeft -= 1;
