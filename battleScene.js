@@ -1,7 +1,7 @@
 import { c, reDraw } from "./canvas.js";
 import { attacks } from "./data/attacks.js";
 import { pokemon } from "./data/pokemon.js";
-import { createAttacks, takeTurn } from "./battle.js";
+import { takeTurn, faintPokemon, finishBattle } from "./battle.js";
 import { pokemonCry, ball } from "./data/audio.js";
 import Messages from "./classes/Messages.js";
 import Sprite from "./classes/Sprite.js";
@@ -39,11 +39,11 @@ playerTeam = [
   new Charizard(pokemon.Charizard),
 ];
 enemyTeam = [
-  new Dragonite({ ...pokemon.Dragonite, isEnemy: true }),
-  new MewTwo({ ...pokemon.Mewtwo, isEnemy: true }),
+  new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
   new Exeggutor({ ...pokemon.Exeggutor, isEnemy: true }),
   new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),
-  new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
+  new Dragonite({ ...pokemon.Dragonite, isEnemy: true }),
+  new MewTwo({ ...pokemon.Mewtwo, isEnemy: true }),
 ];
 
 let userInterface = document.querySelector("#userInterface");
@@ -130,7 +130,7 @@ export function initBattle() {
   });
 
   createPokemonSelectScreen();
-  createAttacks(playerTeam[currentPlayer]);
+  createAttacks();
   addEventsToAttacks();
 }
 
@@ -139,10 +139,6 @@ function addEventsToAttacks() {
     b.addEventListener("click", (e) => {
       let speedWinner;
       const selectedAttack = attacks[e.currentTarget.id];
-
-      // random attack
-      let enemyAttack = 3;
-      const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
 
       if (
         playerTeam[currentPlayer].getSpeed() >
@@ -167,23 +163,10 @@ function addEventsToAttacks() {
         );
 
         queue.push(() => {
-          takeTurn(
-            enemyTeam[currentEnemy],
-            randomAttack,
-            playerTeam[currentPlayer],
-            renderedSprites,
-            queue
-          );
+          enemyMove();
         });
       } else {
-        takeTurn(
-          enemyTeam[currentEnemy],
-          randomAttack,
-          playerTeam[currentPlayer],
-          renderedSprites,
-          queue,
-          battleAnimationId
-        );
+        enemyMove();
 
         queue.push(() => {
           takeTurn(
@@ -235,6 +218,8 @@ function createPokemonSelectScreen() {
 
           // send out next pokemon
           sendOutPlayerPoke(p.id);
+
+          queue.push(() => enemyMove());
         });
     });
   });
@@ -285,6 +270,63 @@ function goToSelectScreen(justFainted) {
   }
 }
 
+/**** Send out enemy pokemon ****/
+function sendOutNext() {
+  let s = enemyTeam[currentEnemy].size;
+  let x = enemyTeam[currentEnemy].position.x;
+  let y = enemyTeam[currentEnemy].position.y - 20;
+
+  currentEnemy = currentEnemy + 1;
+
+  enemyTeam[currentEnemy].reDraw(s, x, y);
+
+  document.querySelector("#dialogueBox").style.display = "block";
+  document.querySelector("#dialogueBox").innerHTML =
+    "Enemy trainer sent out " + enemyTeam[currentEnemy].name + "!";
+
+  document.querySelector("#enemyName").innerHTML = enemyTeam[currentEnemy].name;
+  document.querySelector("#enemyHealthBar").style.width = "100%";
+
+  document.querySelector("#enemyStatus").innerHTML = ":L50";
+
+  const pokeballImg = new Image();
+  pokeballImg.src = "./images/effects/pokeballEnter.png";
+
+  const pokeball = new Sprite({
+    position: {
+      x: x - 10,
+      y: y - 40,
+    },
+    backSprite: pokeballImg,
+    size: enemyTeam[currentEnemy].size,
+    frames: {
+      max: 6,
+      hold: 10,
+    },
+    animate: true,
+  });
+
+  renderedSprites.splice(1, 1);
+  renderedSprites.splice(1, 1, pokeball);
+
+  ball.play();
+
+  gsap.to(pokeball, {
+    duration: 0.6,
+    onComplete: () => {
+      if (currentEnemy === 1) pokemonCry.EXEGGUTOR.play();
+      else if (currentEnemy === 2) pokemonCry.BLASTOISE.play();
+      else if (currentEnemy === 3) pokemonCry.DRAGONITE.play();
+      else if (currentEnemy === 4) pokemonCry.MEWTWO.play();
+
+      renderedSprites.splice(1, 1);
+      renderedSprites.splice(1, 1, enemyTeam[currentEnemy]);
+      enemyTeam[currentEnemy].animateEntrance();
+    },
+  });
+}
+
+/**** Send out player pokemon ****/
 function sendOutPlayerPoke(newPoke) {
   dialogueBox.style.display = "block";
   dialogueBox.innerHTML = playerTeam[currentPlayer].name + " return!";
@@ -351,7 +393,8 @@ function sendOutPlayerPoke(newPoke) {
 
         document.querySelector("#playerStatus").innerHTML = currStatus;
 
-        createAttacks(playerTeam[currentPlayer]);
+        createAttacks();
+        addEventsToAttacks();
 
         renderedSprites.splice(0, 1);
         renderedSprites.unshift(pokeball);
@@ -387,6 +430,47 @@ function sendOutPlayerPoke(newPoke) {
       },
     });
   });
+}
+
+/**** Prep attacks ****/
+export function createAttacks() {
+  attacksContainer.replaceChildren();
+
+  // add a button for each of the player's attacks
+  playerTeam[currentPlayer].attacks.forEach((attack) => {
+    const button = document.createElement("button");
+    button.innerHTML = attack.name;
+    button.classList.add("attack");
+    button.id = attack.id;
+    attacksContainer.append(button);
+  });
+}
+
+/***** Enemy turn ****/
+function enemyMove() {
+  let enemyAttack = enemyTeam[currentEnemy].chooseMove();
+  const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
+
+  if (enemyTeam[currentEnemy].health >= 1) {
+    takeTurn(
+      enemyTeam[currentEnemy],
+      randomAttack,
+      playerTeam[currentPlayer],
+      renderedSprites,
+      queue
+    );
+  } else {
+    faintPokemon(enemyTeam[currentEnemy], queue, battleAnimationId);
+
+    numEnemyLeft -= 1;
+
+    queue.push(() => {
+      // enemy sends out next pokemon if they can
+      if (numEnemyLeft <= 0) {
+        finishBattle(battleAnimationId);
+      } else sendOutNext();
+    });
+  }
 }
 
 export function animateBattle() {
