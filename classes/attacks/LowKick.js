@@ -41,12 +41,10 @@ export default class LowKick extends Attack {
 
     if (moveHit !== 1) return moveHit;
 
-    let y1 = 40;
-    let y2 = 100;
+    let y = 100;
 
     if (recipient.size === 2) {
-      y1 = 20;
-      y2 = 80;
+      y = 80;
     }
 
     // create attack sprite
@@ -54,8 +52,8 @@ export default class LowKick extends Attack {
     hitImg.src = "./images/attacks/lowkick.png";
     const hit = new Sprite({
       position: {
-        x: recipient.position.x + 35,
-        y: recipient.position.y + y1,
+        x: recipient.position.x + 20,
+        y: recipient.position.y + y,
       },
       backSprite: hitImg,
       size: recipient.size,
@@ -63,8 +61,8 @@ export default class LowKick extends Attack {
 
     const hit2 = new Sprite({
       position: {
-        x: recipient.position.x + 35,
-        y: recipient.position.y + y2,
+        x: recipient.position.x + 80,
+        y: recipient.position.y + y,
       },
       backSprite: hitImg,
       size: recipient.size,

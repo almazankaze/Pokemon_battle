@@ -142,6 +142,8 @@ function addEventsToAttacks() {
       let speedWinner;
       const selectedAttack = attacks[e.currentTarget.id];
 
+      const enemyAttack = enemyTeam[currentEnemy].chooseMove();
+
       if (
         playerTeam[currentPlayer].getSpeed() >
         enemyTeam[currentEnemy].getSpeed()
@@ -165,10 +167,10 @@ function addEventsToAttacks() {
         );
 
         queue.push(() => {
-          enemyMove(true);
+          enemyMove(true, enemyAttack);
         });
       } else {
-        enemyMove(false);
+        enemyMove(false, enemyAttack);
 
         queue.push(() => {
           if (playerTeam[currentPlayer].health >= 1) {
@@ -236,7 +238,9 @@ function createPokemonSelectScreen() {
           // send out next pokemon
           sendOutPlayerPoke(p.id);
 
-          queue.push(() => enemyMove(true));
+          const enemyAttack = enemyTeam[currentEnemy].chooseMove();
+
+          queue.push(() => enemyMove(true, enemyAttack));
         });
     });
   });
@@ -464,8 +468,7 @@ export function createAttacks() {
 }
 
 /***** Enemy turn ****/
-function enemyMove(checkPlayerHealth) {
-  let enemyAttack = enemyTeam[currentEnemy].chooseMove();
+function enemyMove(checkPlayerHealth, enemyAttack) {
   const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
 
   if (enemyTeam[currentEnemy].health >= 1) {
