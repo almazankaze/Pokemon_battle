@@ -256,4 +256,27 @@ export const pokemon = {
     ],
     size: 3,
   },
+  Machamp: {
+    position: {
+      x: 290,
+      y: 10,
+    },
+    name: "MACHAMP",
+    health: 165,
+    stats: [165, 150, 100, 85, 75],
+    backSprite: {
+      src: "./images/pokemon/machamp.png",
+    },
+    frontSprite: {
+      src: "./images/pokemon/machamp.png",
+    },
+    types: [Types.FIGHTING],
+    attacks: [
+      attacks.BODYSLAM,
+      attacks.SEISMICTOSS,
+      attacks.EARTHQUAKE,
+      attacks.LOWKICK,
+    ],
+    size: 3,
+  },
 };

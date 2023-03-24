@@ -244,4 +244,16 @@ export const attacks = {
     pp: 5,
     acc: 90,
   },
+
+  LOWKICK: {
+    id: "LOWKICK",
+    name: "LOW KICK",
+    power: 50,
+    type: Types.FIGHTING,
+    moveType: 1,
+    tagetStat: 2,
+    status: { canStatus: false, chance: 0, type: "" },
+    pp: 20,
+    acc: 90,
+  },
 };

@@ -39,6 +39,7 @@ playerTeam = [
   new Charizard(pokemon.Charizard),
 ];
 enemyTeam = [
+  new Dragonite({ ...pokemon.Dragonite, isEnemy: true }),
   new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
   new Exeggutor({ ...pokemon.Exeggutor, isEnemy: true }),
   new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),

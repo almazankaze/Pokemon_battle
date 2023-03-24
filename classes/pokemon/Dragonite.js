@@ -43,7 +43,7 @@ export default class Dragonite extends Pokemon {
     this.moves = {};
     this.moves["BODY SLAM"] = new BodySlam(attacks[0]);
     this.moves["THUNDERBOLT"] = new ThunderBolt(attacks[1]);
-    this.moves["Ice BEAM"] = new IceBeam(attacks[2]);
+    this.moves["ICE BEAM"] = new IceBeam(attacks[2]);
     this.moves["HYPERBEAM"] = new HyperBeam(attacks[3]);
   }
 
