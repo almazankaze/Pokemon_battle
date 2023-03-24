@@ -96,7 +96,7 @@ export const psychic = new Howl({
   loop: false,
 });
 
-export const sesismicToss = new Howl({
+export const seismicToss = new Howl({
   src: "./audio/attacks/seismicToss.wav",
   html5: true,
   volume: 0.3,

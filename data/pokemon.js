@@ -272,9 +272,9 @@ export const pokemon = {
     },
     types: [Types.FIGHTING],
     attacks: [
+      attacks.EARTHQUAKE,
       attacks.BODYSLAM,
       attacks.SEISMICTOSS,
-      attacks.EARTHQUAKE,
       attacks.LOWKICK,
     ],
     size: 3,

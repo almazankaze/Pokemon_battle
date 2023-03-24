@@ -248,7 +248,7 @@ export const attacks = {
   LOWKICK: {
     id: "LOWKICK",
     name: "LOW KICK",
-    power: 50,
+    power: 80,
     type: Types.FIGHTING,
     moveType: 1,
     tagetStat: 2,

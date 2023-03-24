@@ -201,7 +201,7 @@ export default class Pokemon extends Sprite {
 
   animateEntrance() {
     this.animate = true;
-    pokemonCry[this.name].play();
+    //pokemonCry[this.name].play();
 
     const t = gsap.timeline();
 

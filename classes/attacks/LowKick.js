@@ -1,8 +1,7 @@
 import Sprite from "../Sprite.js";
 import Attack from "./Attack.js";
-import { stomp } from "../../data/audio.js";
 
-export default class Stomp extends Attack {
+export default class LowKick extends Attack {
   constructor({
     name,
     type,
@@ -89,7 +88,7 @@ export default class Stomp extends Attack {
 
     const parent = gsap.timeline();
 
-    stomp.play();
+    //lowkick.play();
 
     parent.to(t, {
       progress: 1,
