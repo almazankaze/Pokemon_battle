@@ -1,5 +1,6 @@
 import Sprite from "../Sprite.js";
 import Attack from "./Attack.js";
+import { lowkick } from "../../data/audio.js";
 
 export default class LowKick extends Attack {
   constructor({
@@ -41,10 +42,10 @@ export default class LowKick extends Attack {
 
     if (moveHit !== 1) return moveHit;
 
-    let y = 100;
+    let y = 80;
 
     if (recipient.size === 2) {
-      y = 80;
+      y = 60;
     }
 
     // create attack sprite
@@ -86,7 +87,7 @@ export default class LowKick extends Attack {
 
     const parent = gsap.timeline();
 
-    //lowkick.play();
+    lowkick.play();
 
     parent.to(t, {
       progress: 1,

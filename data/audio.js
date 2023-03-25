@@ -152,6 +152,13 @@ export const hyperBeam = new Howl({
   loop: false,
 });
 
+export const lowkick = new Howl({
+  src: "./audio/attacks/lowkick.wav",
+  html5: true,
+  volume: 0.3,
+  loop: false,
+});
+
 export const hit = new Howl({
   src: "./audio/other/get-hit.wav",
   html5: true,
@@ -167,6 +174,12 @@ export const sleeping = new Howl({
 
 export const frozen = new Howl({
   src: "./audio/other/frozen.wav",
+  html5: true,
+  volume: 0.3,
+});
+
+export const poison = new Howl({
+  src: "./audio/other/poison.wav",
   html5: true,
   volume: 0.3,
 });
@@ -240,6 +253,12 @@ export const pokemonCry = {
   }),
   GYARADOS: new Howl({
     src: "./audio/pokemon/audio_gyarados.wav",
+    html5: true,
+    volume: 0.3,
+    loop: false,
+  }),
+  MACHAMP: new Howl({
+    src: "./audio/pokemon/audio_machamp.wav",
     html5: true,
     volume: 0.3,
     loop: false,

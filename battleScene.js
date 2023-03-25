@@ -1,7 +1,12 @@
 import { c, reDraw } from "./canvas.js";
 import { attacks } from "./data/attacks.js";
 import { pokemon } from "./data/pokemon.js";
-import { takeTurn, faintPokemon, finishBattle } from "./battle.js";
+import {
+  takeTurn,
+  faintPokemon,
+  finishBattle,
+  applyEndDamage,
+} from "./battle.js";
 import { pokemonCry, ball } from "./data/audio.js";
 import Messages from "./classes/Messages.js";
 import Sprite from "./classes/Sprite.js";
@@ -32,20 +37,20 @@ let numEnemyLeft = 6;
 const messages = new Messages();
 
 playerTeam = [
+  new Charizard(pokemon.Charizard),
   new Snorlax(pokemon.Snorlax),
   new Gyarados(pokemon.Gyarados),
   new Jolteon(pokemon.Jolteon),
   new Gengar(pokemon.Gengar),
   new Mew(pokemon.Mew),
-  new Charizard(pokemon.Charizard),
 ];
 enemyTeam = [
   new Machamp({ ...pokemon.Machamp, isEnemy: true }),
-  new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
   new Exeggutor({ ...pokemon.Exeggutor, isEnemy: true }),
   new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),
   new Dragonite({ ...pokemon.Dragonite, isEnemy: true }),
   new MewTwo({ ...pokemon.Mewtwo, isEnemy: true }),
+  new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
 ];
 
 let userInterface = document.querySelector("#userInterface");
@@ -510,6 +515,29 @@ function playerEndTurn() {
       if (numPlayerLeft <= 0) finishBattle(battleAnimationId);
       else goToSelectScreen(true);
     });
+  } else if (enemyTeam[currentEnemy].status === "burned") {
+    applyEndDamage(enemyTeam[currentEnemy], renderedSprites);
+
+    queue.push(() => {
+      if (enemyTeam[currentEnemy].health === 0) {
+        faintPokemon(enemyTeam[currentEnemy], queue, battleAnimationId);
+
+        numEnemyLeft -= 1;
+
+        queue.push(() => {
+          // enemy sends out next pokemon if they can
+          if (numEnemyLeft <= 0) {
+            finishBattle(battleAnimationId);
+          } else sendOutNext();
+        });
+      } else {
+        queue.shift();
+        dialogueBox.style.display = "none";
+      }
+    });
+  } else {
+    queue.shift();
+    dialogueBox.style.display = "none";
   }
 }
 
@@ -526,6 +554,29 @@ function enemyEndTurn() {
         finishBattle(battleAnimationId);
       } else sendOutNext();
     });
+  } else if (enemyTeam[currentEnemy].status === "burned") {
+    applyEndDamage(enemyTeam[currentEnemy], renderedSprites);
+
+    queue.push(() => {
+      if (enemyTeam[currentEnemy].health === 0) {
+        faintPokemon(enemyTeam[currentEnemy], queue, battleAnimationId);
+        numEnemyLeft -= 1;
+
+        queue.push(() => {
+          // enemy sends out next pokemon if they can
+
+          if (numEnemyLeft <= 0) {
+            battle.finishBattle(battleAnimationId);
+          } else sendOutNext();
+        });
+      } else {
+        queue.shift();
+        dialogueBox.style.display = "none";
+      }
+    });
+  } else {
+    queue.shift();
+    dialogueBox.style.display = "none";
   }
 }
 

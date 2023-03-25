@@ -1,5 +1,5 @@
 import Sprite from "./Sprite.js";
-import { sleeping, frozen } from "../data/audio.js";
+import { sleeping, frozen, poison } from "../data/audio.js";
 
 export default class Messages {
   constructor() {
@@ -167,7 +167,7 @@ export default class Messages {
 
     // create burn sprite
     const burnImage = new Image();
-    burnImage.src = "./img/effects/poison.png";
+    burnImage.src = "./images/effects/poison.png";
     const burn = new Sprite({
       position: {
         x: pokemon.position.x + pos,
@@ -179,7 +179,7 @@ export default class Messages {
 
     renderedSprites.splice(2, 0, burn);
 
-    audio.burnEffect.play();
+    poison.play();
 
     gsap.to(burn.position, {
       x: burn.position.x,

@@ -205,6 +205,10 @@ export function takeTurn(attacker, move, recipient, renderedSprites, queue) {
   }
 }
 
+export function applyEndDamage(pokemon, renderedSprites) {
+  messages.burnEffect(pokemon, renderedSprites);
+}
+
 export function faintPokemon(pokemon, queue, battleAnimationId) {
   pokemon.faint();
 }
