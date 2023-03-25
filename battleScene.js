@@ -7,7 +7,7 @@ import {
   finishBattle,
   applyEndDamage,
 } from "./battle.js";
-import { pokemonCry, ball } from "./data/audio.js";
+import { pokemonCry, ball, confirm } from "./data/audio.js";
 import Messages from "./classes/Messages.js";
 import Sprite from "./classes/Sprite.js";
 import Charizard from "./classes/pokemon/Charizard.js";
@@ -37,20 +37,20 @@ let numEnemyLeft = 6;
 const messages = new Messages();
 
 playerTeam = [
-  new Charizard(pokemon.Charizard),
   new Snorlax(pokemon.Snorlax),
+  new Charizard(pokemon.Charizard),
   new Gyarados(pokemon.Gyarados),
   new Jolteon(pokemon.Jolteon),
   new Gengar(pokemon.Gengar),
   new Mew(pokemon.Mew),
 ];
 enemyTeam = [
+  new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
   new Machamp({ ...pokemon.Machamp, isEnemy: true }),
   new Exeggutor({ ...pokemon.Exeggutor, isEnemy: true }),
   new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),
   new Dragonite({ ...pokemon.Dragonite, isEnemy: true }),
   new MewTwo({ ...pokemon.Mewtwo, isEnemy: true }),
-  new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
 ];
 
 let userInterface = document.querySelector("#userInterface");
@@ -70,6 +70,7 @@ let pokeContainer = document.querySelector("#pokeContainer");
 dialogueBox.addEventListener("click", (e) => {
   if (queue.length > 0) {
     queue[0]();
+    confirm.play();
     queue.shift();
   } else e.currentTarget.style.display = "none";
 });
@@ -122,6 +123,7 @@ export function initBattle() {
     choiceContainer.style.display = "none";
     typesContainer.style.display = "block";
     attacksContainer.style.display = "grid";
+    confirm.play();
   });
 
   typesContainer.addEventListener("click", (e) => {
@@ -134,6 +136,7 @@ export function initBattle() {
   document.querySelector("#backBtn").addEventListener("click", (e) => {
     userInterface.style.display = "block";
     selectScreen.style.display = "none";
+    confirm.play();
   });
 
   createPokemonSelectScreen();
@@ -144,6 +147,8 @@ export function initBattle() {
 function addEventsToAttacks() {
   document.querySelectorAll(".attack").forEach((b) => {
     b.addEventListener("click", (e) => {
+      confirm.play();
+
       let speedWinner;
       const selectedAttack = attacks[e.currentTarget.id];
 
@@ -252,6 +257,7 @@ function createPokemonSelectScreen() {
 }
 
 function goToSelectScreen(justFainted) {
+  confirm.play();
   userInterface.style.display = "none";
   selectScreen.style.display = "block";
 
@@ -340,10 +346,11 @@ function sendOutNext() {
   gsap.to(pokeball, {
     duration: 0.6,
     onComplete: () => {
-      if (currentEnemy === 1) pokemonCry.EXEGGUTOR.play();
-      else if (currentEnemy === 2) pokemonCry.BLASTOISE.play();
-      else if (currentEnemy === 3) pokemonCry.DRAGONITE.play();
-      else if (currentEnemy === 4) pokemonCry.MEWTWO.play();
+      if (currentEnemy === 1) pokemonCry.MACHAMP.play();
+      else if (currentEnemy === 2) pokemonCry.EXEGGUTOR.play();
+      else if (currentEnemy === 3) pokemonCry.BLASTOISE.play();
+      else if (currentEnemy === 4) pokemonCry.DRAGONITE.play();
+      else if (currentEnemy === 5) pokemonCry.MEWTWO.play();
 
       renderedSprites.splice(1, 1);
       renderedSprites.splice(1, 1, enemyTeam[currentEnemy]);
@@ -474,7 +481,10 @@ export function createAttacks() {
 
 /***** Enemy turn ****/
 function enemyMove(checkPlayerHealth, enemyAttack) {
-  const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
+  let randomAttack;
+
+  if (enemyAttack === 5) randomAttack = 5;
+  else randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
 
   if (enemyTeam[currentEnemy].health >= 1) {
     takeTurn(

@@ -134,8 +134,12 @@ function breakStatus(attacker, renderedSprites) {
 
 // pokemon takes their turn
 export function takeTurn(attacker, move, recipient, renderedSprites, queue) {
+  if (move === 5) {
+    messages.recharge(attacker.name);
+  }
+
   // can pokemon break out of condition
-  if (breakStatus(attacker, renderedSprites)) {
+  else if (breakStatus(attacker, renderedSprites)) {
     attacker.attack({
       attack: move,
       recipient: recipient,

@@ -190,77 +190,83 @@ export const ball = new Howl({
   volume: 0.3,
 });
 
+export const confirm = new Howl({
+  src: "./audio/other/confirm.wav",
+  html5: true,
+  volume: 0.1,
+});
+
 export const pokemonCry = {
   CHARIZARD: new Howl({
     src: "./audio/pokemon/audio_charizard.wav",
     html5: true,
-    volume: 0.3,
+    volume: 0.4,
     loop: false,
   }),
   BLASTOISE: new Howl({
     src: "./audio/pokemon/audio_blastoise.wav",
     html5: true,
-    volume: 0.3,
+    volume: 0.4,
     loop: false,
   }),
   RHYDON: new Howl({
     src: "./audio/pokemon/audio_rhydon.wav",
     html5: true,
-    volume: 0.3,
+    volume: 0.4,
     loop: false,
   }),
   EXEGGUTOR: new Howl({
     src: "./audio/pokemon/audio_exeggutor.wav",
     html5: true,
-    volume: 0.3,
+    volume: 0.4,
     loop: false,
   }),
   GENGAR: new Howl({
     src: "./audio/pokemon/audio_gengar.wav",
     html5: true,
-    volume: 0.3,
+    volume: 0.4,
     loop: false,
   }),
   JOLTEON: new Howl({
     src: "./audio/pokemon/audio_jolteon.wav",
     html5: true,
-    volume: 0.3,
+    volume: 0.4,
     loop: false,
   }),
   MEW: new Howl({
     src: "./audio/pokemon/audio_mew.wav",
     html5: true,
-    volume: 0.3,
+    volume: 0.4,
     loop: false,
   }),
   MEWTWO: new Howl({
     src: "./audio/pokemon/audio_mewtwo.wav",
     html5: true,
-    volume: 0.3,
+    volume: 0.4,
     loop: false,
   }),
   SNORLAX: new Howl({
     src: "./audio/pokemon/audio_snorlax.wav",
     html5: true,
-    volume: 0.3,
+    volume: 0.4,
     loop: false,
   }),
   DRAGONITE: new Howl({
     src: "./audio/pokemon/audio_dragonite.wav",
     html5: true,
-    volume: 0.3,
+    volume: 0.4,
     loop: false,
   }),
   GYARADOS: new Howl({
     src: "./audio/pokemon/audio_gyarados.wav",
     html5: true,
-    volume: 0.3,
+    volume: 0.4,
     loop: false,
   }),
   MACHAMP: new Howl({
     src: "./audio/pokemon/audio_machamp.wav",
     html5: true,
-    volume: 0.3,
+    volume: 0.4,
     loop: false,
   }),
 };

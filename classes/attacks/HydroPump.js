@@ -45,7 +45,7 @@ export default class HydroPump extends Attack {
 
     let x = 100;
 
-    if (recipient.size === 2) x = 60;
+    if (recipient.size === 2) x = 80;
 
     const hydroPumpImage = new Image();
     hydroPumpImage.src = "./images/attacks/hydropumpStart.png";

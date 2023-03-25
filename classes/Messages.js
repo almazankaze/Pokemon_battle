@@ -30,6 +30,11 @@ export default class Messages {
     this.dialogueBox.innerHTML = enemy + " " + pokemon.name + " Missed!";
   }
 
+  recharge(pokemon) {
+    this.dialogueBox.style.display = "block";
+    this.dialogueBox.innerHTML = "Enemy " + pokemon + " must recharge.";
+  }
+
   effectivenessMess(effectiveness) {
     this.dialogueBox.style.display = "block";
 

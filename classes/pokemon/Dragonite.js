@@ -45,6 +45,8 @@ export default class Dragonite extends Pokemon {
     this.moves["THUNDERBOLT"] = new ThunderBolt(attacks[1]);
     this.moves["ICE BEAM"] = new IceBeam(attacks[2]);
     this.moves["HYPERBEAM"] = new HyperBeam(attacks[3]);
+
+    this.mustRecharge = false;
   }
 
   getMovePP(attack) {
@@ -104,6 +106,8 @@ export default class Dragonite extends Pokemon {
           recipient,
           renderedSprites
         );
+
+        if (this.didHit) this.mustRecharge = true;
         break;
     }
 
@@ -134,6 +138,11 @@ export default class Dragonite extends Pokemon {
   }
 
   chooseMove() {
+    if (this.mustRecharge) {
+      this.mustRecharge = false;
+      return 5;
+    }
+
     return Math.floor(Math.random() * 4);
   }
 }

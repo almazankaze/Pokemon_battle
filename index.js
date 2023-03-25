@@ -29,10 +29,11 @@ function startGame() {
 }
 
 // starts game when user clicks screen
-addEventListener("pointerdown", () => {
+document.querySelector("#startBtn").addEventListener("click", () => {
   if (!clicked) {
     battle.play();
     clicked = true;
+    document.querySelector("#title-screen").style.display = "none";
     startGame();
   }
 });

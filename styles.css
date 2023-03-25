@@ -16,18 +16,6 @@ body {
   align-items: center;
 }
 
-button {
-  border: 0;
-  font-family: "Press Start 2P", cursive;
-  font-size: 0.625rem;
-  color: black;
-}
-
-button:hover {
-  background-color: #ddd;
-  cursor: pointer;
-}
-
 h2 {
   font-size: 1rem;
 }
@@ -79,8 +67,56 @@ h2 {
   font-size: 0.75rem;
 }
 
+#title-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 12;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.startBtn {
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.625rem;
+  border: 1px solid black;
+  cursor: pointer;
+  padding: 0.75rem;
+}
+
 .backBtn {
-  margin-top: 0.5rem;
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.5rem;
+  color: black;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.menu-btn {
+  border: 0;
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.625rem;
+  color: black;
+}
+
+.menu-btn:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.attack {
+  border: 0;
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.625rem;
+  color: black;
+}
+
+.attack:hover {
+  background-color: #ddd;
+  cursor: pointer;
 }
 
 #userInterface {
@@ -217,7 +253,7 @@ h2 {
     margin-top: 2rem;
   }
 
-  button {
+  .attack, .menu-btn, .backBtn {
     font-size: 0.4rem;
   }
 
@@ -233,11 +269,6 @@ h2 {
 
   .selectContainer h2 {
     font-size: 0.5rem;
-  }
-
-  .backBtn {
-    font-size: 0.625rem;
-    margin-top: 0.5rem;
   }
 
   .poke-info {
