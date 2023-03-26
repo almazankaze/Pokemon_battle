@@ -67,7 +67,8 @@ h2 {
   font-size: 0.75rem;
 }
 
-#title-screen {
+#title-screen,
+#restart-screen {
   position: absolute;
   top: 0;
   left: 0;
@@ -79,7 +80,12 @@ h2 {
   align-items: center;
 }
 
-.startBtn {
+#restart-screen {
+  display: none;
+}
+
+.startBtn,
+.restartBtn {
   font-family: "Press Start 2P", cursive;
   font-size: 0.625rem;
   border: 1px solid black;
@@ -253,7 +259,10 @@ h2 {
     margin-top: 2rem;
   }
 
-  .attack, .menu-btn, .backBtn {
+  .attack,
+  .menu-btn,
+  .backBtn,
+  .restartBtn {
     font-size: 0.4rem;
   }
 

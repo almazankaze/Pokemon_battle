@@ -33,6 +33,10 @@ document.querySelector("#startBtn").addEventListener("click", () => {
     battle.play();
     clicked = true;
     document.querySelector("#title-screen").style.display = "none";
-    startGame();
+    startGame(false);
   }
+});
+
+document.querySelector("#restartBtn").addEventListener("click", () => {
+  location.reload();
 });

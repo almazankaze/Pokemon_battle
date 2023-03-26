@@ -213,7 +213,7 @@ export function applyEndDamage(pokemon, renderedSprites) {
   messages.burnEffect(pokemon, renderedSprites);
 }
 
-export function faintPokemon(pokemon, queue, battleAnimationId) {
+export function faintPokemon(pokemon) {
   pokemon.faint();
 }
 
@@ -224,7 +224,7 @@ export function finishBattle(battleAnimationId, winner) {
     document.querySelector(".enemy-info").style.display = "none";
     document.querySelector(".player-info").style.display = "none";
     document.querySelector("#menu").classList.add("loading");
-    dialogueBox.innerHTML = "Enemy deafeted! Thanks for playing!";
+    dialogueBox.innerHTML = "Enemy defeated! Thanks for playing!";
     battle.stop();
     victory.play();
   } else {
@@ -233,6 +233,7 @@ export function finishBattle(battleAnimationId, winner) {
       onComplete: () => {
         cancelAnimationFrame(battleAnimationId);
         document.querySelector("#userInterface").style.display = "none";
+        document.querySelector("#restart-screen").style.display = "flex";
         battle.stop();
       },
     });

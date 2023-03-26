@@ -31,8 +31,8 @@ let playerTeam;
 let currentPlayer = 0;
 let numPlayerLeft = 6;
 let enemyTeam;
-let currentEnemy = 5;
-let numEnemyLeft = 1;
+let currentEnemy = 0;
+let numEnemyLeft = 6;
 
 const messages = new Messages();
 
@@ -104,13 +104,31 @@ export function beginSequence() {
 
   const pokeballImg = new Image();
   pokeballImg.src = "./images/effects/pokeballEnter.png";
+  const rivalImg = new Image();
+  rivalImg.src = "./images/rival.png";
+
+  let x = enemyTeam[currentEnemy].position.x;
+  let y = enemyTeam[currentEnemy].position.y - 20;
+
+  const rival = new Sprite({
+    position: {
+      x: x - 10,
+      y: y + 20,
+    },
+    backSprite: rivalImg,
+    size: enemyTeam[currentEnemy].size,
+    frames: {
+      max: 1,
+      hold: 10,
+    },
+  });
+
+  renderedSprites = [rival];
 
   dialogueBox.innerHTML = messages.startMessage();
 
   queue.push(() => {
     document.querySelector("#menu").classList.add("loading");
-    let x = enemyTeam[currentEnemy].position.x;
-    let y = enemyTeam[currentEnemy].position.y - 20;
 
     document.querySelector("#dialogueBox").style.display = "block";
     document.querySelector("#dialogueBox").innerHTML =
@@ -130,17 +148,27 @@ export function beginSequence() {
       animate: true,
     });
 
-    renderedSprites = [pokeball];
-
-    ball.play();
-
-    gsap.to(pokeball, {
+    gsap.to(rival.position, {
+      x: rival.position.x + 20,
+    });
+    gsap.to(rival, {
+      opacity: 0,
       duration: 0.6,
       onComplete: () => {
         renderedSprites.splice(0, 1);
-        renderedSprites.splice(0, 1, enemyTeam[currentEnemy]);
-        enemyTeam[currentEnemy].animateEntrance();
-        document.querySelector("#menu").classList.remove("loading");
+        renderedSprites.splice(0, 1, pokeball);
+
+        ball.play();
+
+        gsap.to(pokeball, {
+          duration: 0.6,
+          onComplete: () => {
+            renderedSprites.splice(0, 1);
+            renderedSprites.splice(0, 1, enemyTeam[currentEnemy]);
+            enemyTeam[currentEnemy].animateEntrance();
+            document.querySelector("#menu").classList.remove("loading");
+          },
+        });
       },
     });
   });
@@ -682,6 +710,7 @@ export function animateBattle() {
   battleAnimationId = window.requestAnimationFrame(animateBattle);
 
   reDraw(c);
+
   renderedSprites.forEach((sprite) => {
     sprite.draw(c);
   });
