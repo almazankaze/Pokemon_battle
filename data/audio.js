@@ -5,6 +5,13 @@ export const battle = new Howl({
   loop: true,
 });
 
+export const victory = new Howl({
+  src: "./audio/victory.mp3",
+  html5: true,
+  volume: 0.2,
+  loop: true,
+});
+
 export const bodySlam = new Howl({
   src: "./audio/attacks/body-slam.wav",
   html5: true,

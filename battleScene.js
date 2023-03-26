@@ -31,8 +31,8 @@ let playerTeam;
 let currentPlayer = 0;
 let numPlayerLeft = 6;
 let enemyTeam;
-let currentEnemy = 0;
-let numEnemyLeft = 6;
+let currentEnemy = 5;
+let numEnemyLeft = 1;
 
 const messages = new Messages();
 
@@ -137,7 +137,6 @@ export function beginSequence() {
     gsap.to(pokeball, {
       duration: 0.6,
       onComplete: () => {
-        pokemonCry.RHYDON.play();
         renderedSprites.splice(0, 1);
         renderedSprites.splice(0, 1, enemyTeam[currentEnemy]);
         enemyTeam[currentEnemy].animateEntrance();
@@ -290,7 +289,7 @@ function addEventsToAttacks() {
             numPlayerLeft -= 1;
 
             queue.push(() => {
-              if (numPlayerLeft <= 0) finishBattle(battleAnimationId);
+              if (numPlayerLeft <= 0) finishBattle(battleAnimationId, 2);
               else goToSelectScreen(true);
             });
           }
@@ -597,7 +596,7 @@ function enemyMove(checkPlayerHealth, enemyAttack) {
     queue.push(() => {
       // enemy sends out next pokemon if they can
       if (numEnemyLeft <= 0) {
-        finishBattle(battleAnimationId);
+        finishBattle(battleAnimationId, 1);
       } else sendOutNext();
     });
   }
@@ -611,7 +610,7 @@ function playerEndTurn() {
     numPlayerLeft -= 1;
 
     queue.push(() => {
-      if (numPlayerLeft <= 0) finishBattle(battleAnimationId);
+      if (numPlayerLeft <= 0) finishBattle(battleAnimationId, 2);
       else goToSelectScreen(true);
     });
   } else if (enemyTeam[currentEnemy].status === "burned") {
@@ -626,7 +625,7 @@ function playerEndTurn() {
         queue.push(() => {
           // enemy sends out next pokemon if they can
           if (numEnemyLeft <= 0) {
-            finishBattle(battleAnimationId);
+            finishBattle(battleAnimationId, 1);
           } else sendOutNext();
         });
       } else {
@@ -650,7 +649,7 @@ function enemyEndTurn() {
     queue.push(() => {
       // enemy sends out next pokemon if they can
       if (numEnemyLeft <= 0) {
-        finishBattle(battleAnimationId);
+        finishBattle(battleAnimationId, 1);
       } else sendOutNext();
     });
   } else if (enemyTeam[currentEnemy].status === "burned") {
@@ -665,7 +664,7 @@ function enemyEndTurn() {
           // enemy sends out next pokemon if they can
 
           if (numEnemyLeft <= 0) {
-            battle.finishBattle(battleAnimationId);
+            finishBattle(battleAnimationId, 1);
           } else sendOutNext();
         });
       } else {

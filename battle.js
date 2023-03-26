@@ -1,4 +1,4 @@
-import { battle } from "./data/audio.js";
+import { battle, victory } from "./data/audio.js";
 import Messages from "./classes/Messages.js";
 
 const messages = new Messages();
@@ -218,13 +218,23 @@ export function faintPokemon(pokemon, queue, battleAnimationId) {
 }
 
 // end the battle
-export function finishBattle(battleAnimationId) {
-  gsap.to("#transitionBg", {
-    opacity: 1,
-    onComplete: () => {
-      cancelAnimationFrame(battleAnimationId);
-      document.querySelector("#userInterface").style.display = "none";
-      battle.stop();
-    },
-  });
+export function finishBattle(battleAnimationId, winner) {
+  if (winner === 1) {
+    cancelAnimationFrame(battleAnimationId);
+    document.querySelector(".enemy-info").style.display = "none";
+    document.querySelector(".player-info").style.display = "none";
+    document.querySelector("#menu").classList.add("loading");
+    dialogueBox.innerHTML = "Enemy deafeted! Thanks for playing!";
+    battle.stop();
+    victory.play();
+  } else {
+    gsap.to("#transitionBg", {
+      opacity: 1,
+      onComplete: () => {
+        cancelAnimationFrame(battleAnimationId);
+        document.querySelector("#userInterface").style.display = "none";
+        battle.stop();
+      },
+    });
+  }
 }
