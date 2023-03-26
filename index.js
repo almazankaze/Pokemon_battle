@@ -1,4 +1,4 @@
-import { initBattle, animateBattle } from "./battleScene.js";
+import { beginSequence, animateBattle } from "./battleScene.js";
 import { battle } from "./data/audio.js";
 
 let clicked = false;
@@ -15,8 +15,7 @@ function startGame() {
         opacity: 1,
         duration: 0.4,
         onComplete() {
-          // activate a new animation loop
-          initBattle();
+          beginSequence();
           animateBattle();
           gsap.to("#transitionBg", {
             opacity: 0,

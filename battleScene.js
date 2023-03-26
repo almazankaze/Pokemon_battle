@@ -24,7 +24,7 @@ import Dragonite from "./classes/pokemon/Dragonite.js";
 import Machamp from "./classes/pokemon/Machamp.js";
 
 let queue = [];
-let renderedSprites;
+let renderedSprites = [];
 let battleAnimationId;
 
 let playerTeam;
@@ -96,11 +96,106 @@ function randomIntFromInterval(min, max) {
 
 reSizeSprites();
 
-export function initBattle() {
+export function beginSequence() {
+  userInterface.style.display = "block";
+  dialogueBox.style.display = "block";
+  document.querySelector(".enemy-info").style.display = "none";
+  document.querySelector(".player-info").style.display = "none";
+
+  const pokeballImg = new Image();
+  pokeballImg.src = "./images/effects/pokeballEnter.png";
+
+  dialogueBox.innerHTML = messages.startMessage();
+
+  queue.push(() => {
+    document.querySelector("#menu").classList.add("loading");
+    let x = enemyTeam[currentEnemy].position.x;
+    let y = enemyTeam[currentEnemy].position.y - 20;
+
+    document.querySelector("#dialogueBox").style.display = "block";
+    document.querySelector("#dialogueBox").innerHTML =
+      "Enemy trainer sent out " + enemyTeam[currentEnemy].name + "!";
+
+    const pokeball = new Sprite({
+      position: {
+        x: x - 10,
+        y: y - 40,
+      },
+      backSprite: pokeballImg,
+      size: enemyTeam[currentEnemy].size,
+      frames: {
+        max: 6,
+        hold: 10,
+      },
+      animate: true,
+    });
+
+    renderedSprites = [pokeball];
+
+    ball.play();
+
+    gsap.to(pokeball, {
+      duration: 0.6,
+      onComplete: () => {
+        pokemonCry.RHYDON.play();
+        renderedSprites.splice(0, 1);
+        renderedSprites.splice(0, 1, enemyTeam[currentEnemy]);
+        enemyTeam[currentEnemy].animateEntrance();
+        document.querySelector("#menu").classList.remove("loading");
+      },
+    });
+  });
+
+  queue.push(() => {
+    document.querySelector("#menu").classList.add("loading");
+    dialogueBox.innerHTML = "Go " + playerTeam[currentPlayer].name + "!";
+
+    let playerS = playerTeam[currentPlayer].size;
+    let playerX = playerTeam[currentPlayer].position.x;
+    let playerY = playerTeam[currentPlayer].position.y;
+
+    const playerPokeball = new Sprite({
+      position: {
+        x: playerX,
+        y: playerY - 20,
+      },
+      backSprite: pokeballImg,
+      size: playerTeam[currentPlayer].size,
+      frames: {
+        max: 6,
+        hold: 10,
+      },
+      animate: true,
+    });
+
+    renderedSprites.unshift(playerPokeball);
+
+    ball.play();
+
+    gsap.to(playerPokeball, {
+      duration: 0.6,
+      onComplete: () => {
+        pokemonCry.SNORLAX.play();
+
+        playerTeam[currentPlayer].reDraw(playerS, playerX, playerY);
+
+        renderedSprites.splice(0, 1);
+        renderedSprites.unshift(playerTeam[currentPlayer]);
+
+        document.querySelector("#menu").classList.remove("loading");
+        initBattle();
+      },
+    });
+  });
+}
+
+function initBattle() {
   userInterface.style.display = "block";
   dialogueBox.style.display = "block";
   playerHealth.style.width = "100%";
   enemyHealth.style.width = "100%";
+  document.querySelector(".enemy-info").style.display = "block";
+  document.querySelector(".player-info").style.display = "block";
 
   // display names
   playerName.innerHTML = playerTeam[currentPlayer].name;
@@ -111,12 +206,6 @@ export function initBattle() {
     playerTeam[currentPlayer].health +
     " / " +
     playerTeam[currentPlayer].stats[0];
-
-  renderedSprites = [playerTeam[currentPlayer], enemyTeam[currentEnemy]];
-
-  enemyTeam[currentEnemy].animateEntrance();
-
-  dialogueBox.innerHTML = messages.startMessage();
 
   document.querySelector("#fightBtn").addEventListener("click", (e) => {
     blankContainer.style.display = "none";
@@ -593,10 +682,8 @@ function enemyEndTurn() {
 export function animateBattle() {
   battleAnimationId = window.requestAnimationFrame(animateBattle);
 
-  reDraw();
+  reDraw(c);
   renderedSprites.forEach((sprite) => {
     sprite.draw(c);
   });
 }
-
-addEventListener("pointerdown", () => {});
